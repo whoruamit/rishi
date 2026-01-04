@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,11 +23,40 @@
             scroll-behavior: smooth;
         }
 
-        h1, h2 {
+        h1, h2, h3 {
             font-family: 'Orbitron', sans-serif;
         }
 
-        /* Canvas Background */
+        /* Hacking Gate-Keeper */
+        #gate-keeper {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1), opacity 1s;
+        }
+
+        .cat-btn {
+            font-size: 6rem;
+            cursor: pointer;
+            color: var(--neon-green);
+            filter: drop-shadow(0 0 15px var(--neon-green));
+            animation: cat-glitch 2s infinite;
+        }
+
+        @keyframes cat-glitch {
+            0% { transform: scale(1); opacity: 1; }
+            5% { transform: translate(-5px, 2px); opacity: 0.8; color: var(--neon-pink); }
+            10% { transform: translate(5px, -2px); opacity: 1; color: var(--neon-green); }
+            15% { transform: translate(0); }
+            100% { transform: translate(0); }
+        }
+
+        /* Matrix Background */
         #matrix-canvas {
             position: fixed;
             top: 0;
@@ -35,347 +65,307 @@
             opacity: 0.3;
         }
 
-        /* Glassmorphism Navbar */
-        nav {
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 45, 117, 0.2);
-            position: fixed;
-            width: 100%;
-            z-index: 100;
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Neon Glowing Text */
-        .neon-text-pink {
-            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
-        }
+        /* Neon & Heart Pulsing */
+        .neon-text-pink { text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink); }
+        .neon-text-green { text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green); color: var(--neon-green); }
 
-        .neon-text-green {
-            text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
-            color: var(--neon-green);
-        }
-
-        /* Heart Animation */
         .heart-beat {
-            animation: heartbeat 1.5s infinite;
-            filter: drop-shadow(0 0 15px var(--neon-pink));
+            animation: heartbeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+            filter: drop-shadow(0 0 20px var(--neon-pink));
         }
 
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            15% { transform: scale(1.3); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.15); }
-            60% { transform: scale(1); }
-        }
-
-        /* Science Experiment Bubbles */
-        .bubble {
-            position: absolute;
-            background: rgba(255, 45, 117, 0.3);
-            border-radius: 50%;
-            pointer-events: none;
-            animation: float 4s infinite ease-in;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
-
-        /* Terminal Style Section */
+        /* Terminal Box */
         .terminal-box {
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.85);
             border: 1px solid var(--neon-green);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-            word-wrap: break-word;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 280px;
         }
 
-        /* Glitch Effect */
-        .glitch {
-            position: relative;
+        /* Profile Glitch */
+        .profile-card {
+            background: linear-gradient(135deg, rgba(255,45,117,0.1) 0%, rgba(15,255,0,0.05) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
         }
-        .glitch::before {
+
+        .glitch-text { position: relative; }
+        .glitch-text::before {
             content: attr(data-text);
             position: absolute;
-            left: -2px;
-            text-shadow: 2px 0 blue;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim 5s infinite linear alternate-reverse;
+            top: 0; left: 0; width: 100%; height: 100%;
+            color: #0ff; z-index: -1;
+            animation: glitch-anim 2s infinite linear alternate-reverse;
         }
 
         @keyframes glitch-anim {
-            0% { clip: rect(31px, 9999px, 94px, 0); }
-            20% { clip: rect(62px, 9999px, 42px, 0); }
-            100% { clip: rect(89px, 9999px, 98px, 0); }
+            0% { clip-path: inset(20% 0 30% 0); transform: translate(-2px, -2px); }
+            100% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 2px); }
         }
 
         .insta-btn {
             background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
             transition: 0.3s;
-            touch-action: manipulation;
-        }
-        .insta-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 0 25px var(--neon-pink);
         }
 
-        /* Mobile Menu */
-        #mobile-menu {
-            transition: transform 0.3s ease-in-out;
-            transform: translateY(-100%);
+        #music-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--neon-pink);
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
         }
-        #mobile-menu.active {
-            transform: translateY(0);
-        }
-
+        
+        section { padding: 100px 20px; }
+        .topics-row { display: flex; overflow-x: auto; gap: 25px; padding: 30px 10px; scrollbar-width: none; }
+        .topics-row::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
-    <!-- Matrix Canvas -->
-    <canvas id="matrix-canvas"></canvas>
-
-    <!-- Navigation -->
-    <nav class="py-4 px-6 md:px-8 flex justify-between items-center">
-        <div class="text-xl md:text-2xl font-bold neon-text-pink tracking-widest">RISHI</div>
-        
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
-            <a href="#home" class="hover:text-[#ff2d75] transition">Home</a>
-            <a href="#lab" class="hover:text-[#ff2d75] transition">The Lab</a>
-            <a href="#hacking" class="hover:text-[#ff2d75] transition">Terminal</a>
-            <a href="#contact" class="hover:text-[#ff2d75] transition">Connect</a>
+    <!-- GATE KEEPER PAGE -->
+    <div id="gate-keeper">
+        <div id="gate-logs" class="absolute top-10 left-10 text-[10px] text-green-500 font-mono opacity-50 pointer-events-none"></div>
+        <div class="cat-btn" id="cat-trigger">
+            <i class="fas fa-cat"></i>
         </div>
-
-        <!-- Mobile Menu Toggle -->
-        <div class="md:hidden cursor-pointer text-2xl" id="menu-toggle">
-             <i class="fas fa-bars" id="menu-icon"></i>
+        <div class="mt-12 text-center">
+            <h2 class="neon-text-green font-bold tracking-[0.6em] text-lg">ACCESSING ABYSS</h2>
+            <p class="text-[10px] opacity-40 mt-3 uppercase" id="gate-status">Click to override security protocols</p>
         </div>
-    </nav>
-
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-auto bg-black/95 z-[90] flex flex-col items-center py-20 space-y-6 md:hidden border-b border-pink-500">
-        <a href="#home" class="text-xl hover:text-pink-500 nav-link">Home</a>
-        <a href="#lab" class="text-xl hover:text-pink-500 nav-link">The Lab</a>
-        <a href="#hacking" class="text-xl hover:text-pink-500 nav-link">Terminal</a>
-        <a href="#contact" class="text-xl hover:text-pink-500 nav-link">Connect</a>
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
-        <div class="science-vial mb-6">
-             <i class="fas fa-flask-vial text-5xl md:text-6xl neon-text-green animate-pulse"></i>
+    <!-- AUDIO -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="music-toggle">
+        <i class="fas fa-volume-mute text-pink-500 text-xl" id="music-icon"></i>
+    </div>
+
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- [HOME] -->
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center relative">
+        <div class="mb-10">
+            <i class="fas fa-vial text-7xl neon-text-green animate-pulse"></i>
         </div>
-        <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 glitch" data-text="RISHI'S WORLD">RISHI'S WORLD</h1>
-        <p class="text-lg md:text-2xl text-pink-200 mb-8 max-w-2xl font-light italic" style="font-family: 'Sacramento', cursive;">
-            "Hacking your heart with the chemistry of love and code."
+        <h1 class="text-7xl md:text-[10rem] font-bold mb-6 glitch-text" data-text="RISHI">RISHI</h1>
+        <p class="text-2xl md:text-4xl text-pink-200 mb-12 italic" style="font-family: 'Sacramento', cursive;">
+            "Engineering the perfect chemistry of love."
         </p>
-        <a href="#contact" class="heart-beat">
-            <i class="fas fa-heart text-5xl md:text-6xl text-red-500"></i>
-        </a>
-        <p class="mt-6 text-[10px] md:text-xs tracking-widest uppercase opacity-50">Click to Initialize Connection</p>
+        <div class="heart-beat cursor-pointer">
+            <i class="fas fa-heart text-7xl text-red-500"></i>
+        </div>
     </section>
 
-    <!-- Science Section -->
-    <section id="lab" class="py-20 px-6 md:px-8 max-w-6xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-12 text-center neon-text-green uppercase tracking-widest">Experimental Data</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+    <!-- [ABOUT] -->
+    <section id="about" class="reveal">
+        <div class="profile-card p-10 flex flex-col md:flex-row items-center gap-12 max-w-5xl mx-auto">
+            <div class="w-56 h-56 rounded-full border-4 border-pink-500 flex-shrink-0 flex items-center justify-center bg-black shadow-[0_0_40px_rgba(255,45,117,0.5)]">
+                <i class="fas fa-user-ninja text-7xl text-pink-500 animate-pulse"></i>
+            </div>
+            <div>
+                <h2 class="text-4xl font-bold mb-6 neon-text-pink uppercase tracking-tighter">Bio-Data: Rishi</h2>
+                <p class="text-gray-300 text-xl italic leading-relaxed mb-8">
+                    "Code ki gehraiyon mein chhupa ek aashiq... jo system ko nahi, dilon ko hack karna jaanta hai."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- [LAB TOPICS] -->
+    <section id="lab" class="reveal">
+        <h2 class="text-3xl font-bold mb-16 text-center neon-text-green uppercase tracking-[0.4em]">The Research Lab</h2>
+        <div class="topics-row">
             <div class="terminal-box border-pink-500">
-                <i class="fas fa-dna text-2xl md:text-3xl mb-4 text-pink-500"></i>
-                <h3 class="font-bold mb-2">Genetic Sync</h3>
-                <p class="text-xs md:text-sm opacity-80">Calculating the molecular compatibility between your soul and Rishi's digital abyss.</p>
+                <i class="fas fa-atom text-4xl mb-6 text-pink-500"></i>
+                <h3 class="text-xl font-bold mb-3">Genetic Sync</h3>
+                <p class="text-sm opacity-70">DNA mapping to find the frequency of true affection.</p>
             </div>
             <div class="terminal-box">
-                <i class="fas fa-microscope text-2xl md:text-3xl mb-4 neon-text-green"></i>
-                <h3 class="font-bold mb-2">Subatomic Love</h3>
-                <p class="text-xs md:text-sm opacity-80">Observed particles behaving in entanglement. Love is the only constant variable.</p>
+                <i class="fas fa-dna text-4xl mb-6 neon-text-green"></i>
+                <h3 class="text-xl font-bold mb-3">Quantum Heart</h3>
+                <p class="text-sm opacity-70">Where distance doesn't matter, feelings are entangled.</p>
             </div>
-            <div class="terminal-box border-blue-500 sm:col-span-2 md:col-span-1">
-                <i class="fas fa-atom text-2xl md:text-3xl mb-4 text-blue-500"></i>
-                <h3 class="font-bold mb-2">Neural Breach</h3>
-                <p class="text-xs md:text-sm opacity-80">Overriding system safeguards to inject affection. Protocol: RISHI_HEART_V2.exe</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hacking Terminal Section -->
-    <section id="hacking" class="py-16 bg-black/50">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="terminal-box font-mono text-xs sm:text-sm md:text-base min-h-[250px] overflow-hidden">
-                <div class="flex items-center space-x-2 mb-4 border-b border-green-900 pb-2">
-                    <div class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-red-500"></div>
-                    <div class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-yellow-500"></div>
-                    <div class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-green-500"></div>
-                    <span class="ml-2 md:ml-4 opacity-50 text-[10px] md:text-xs">rishi_override.sh — 80×24</span>
-                </div>
-                <div id="terminal-content" class="space-y-1">
-                    <p class="text-green-500">> Initializing heart_hack_protocol...</p>
-                    <p class="text-green-500">> Scanning for Rishi (@abyss.creep) presence...</p>
-                    <p class="text-blue-400">> Found target in the emotional database.</p>
-                    <p class="text-pink-500">> Warning: Critical Romantic Radiation.</p>
-                    <p class="text-green-500">> Bypass successful. Firewall disabled.</p>
-                    <p class="text-white animate-pulse">_</p>
-                </div>
+            <div class="terminal-box border-blue-500">
+                <i class="fas fa-brain text-4xl mb-6 text-blue-500"></i>
+                <h3 class="text-xl font-bold mb-3">Neural Link</h3>
+                <p class="text-sm opacity-70">Direct mind-to-mind emotional data transfer protocol.</p>
             </div>
         </div>
     </section>
 
-    <!-- Instagram & Contact -->
-    <section id="contact" class="py-24 flex flex-col items-center justify-center relative overflow-hidden px-6">
-        <div class="absolute inset-0 flex justify-center items-center opacity-10 pointer-events-none">
-            <i class="fas fa-heart text-[15rem] md:text-[25rem] text-pink-500 blur-2xl"></i>
-        </div>
-        
-        <h2 class="text-3xl md:text-4xl font-bold mb-12 z-10 text-center uppercase tracking-widest">Follow Rishi</h2>
-        
-        <div class="z-10 text-center w-full">
-            <div class="relative inline-block group">
-                <!-- Large Heart Animation -->
-                <div class="heart-beat cursor-pointer mb-10">
-                    <a href="https://instagram.com/abyss.creep" target="_blank" class="block">
-                        <div class="w-32 h-32 md:w-48 md:h-48 rounded-full flex items-center justify-center bg-black border-4 border-pink-500 shadow-[0_0_40px_rgba(255,45,117,0.4)] overflow-hidden">
-                            <i class="fab fa-instagram text-6xl md:text-8xl text-white"></i>
-                        </div>
-                    </a>
+    <!-- [INSTAGRAM] -->
+    <section id="contact" class="reveal flex flex-col items-center">
+        <h2 class="text-5xl font-bold mb-16 neon-text-pink uppercase tracking-widest text-center">Breach My Reality</h2>
+        <div class="heart-beat cursor-pointer mb-12">
+            <a href="https://instagram.com/abyss.creep" target="_blank">
+                <div class="w-52 h-52 rounded-full flex items-center justify-center bg-black border-4 border-pink-500 shadow-[0_0_60px_rgba(255,45,117,0.6)]">
+                    <i class="fab fa-instagram text-8xl text-white"></i>
                 </div>
-                
-                <div class="mt-4">
-                    <a href="https://instagram.com/abyss.creep" target="_blank" 
-                       class="insta-btn px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-lg md:text-xl inline-flex items-center space-x-3">
-                        <span>@abyss.creep</span>
-                        <i class="fas fa-external-link-alt text-xs"></i>
-                    </a>
-                </div>
-            </div>
+            </a>
         </div>
-        
-        <div class="mt-24 text-gray-500 text-[10px] md:text-xs tracking-widest uppercase text-center">
-            Made with <i class="fas fa-heart text-red-600"></i> and <i class="fas fa-code text-green-500"></i> by Rishi
-        </div>
+        <a href="https://instagram.com/abyss.creep" target="_blank" class="bg-white text-black px-12 py-5 rounded-full font-black text-2xl uppercase tracking-[0.2em]">
+            @abyss.creep
+        </a>
     </section>
 
     <script>
-        // Matrix Rain Implementation
+        const apiKey = ""; // Runtime provides this
+
+        // WAV Conversion Helper
+        function pcmToWav(pcmData, sampleRate) {
+            const buffer = new ArrayBuffer(44 + pcmData.length);
+            const view = new DataView(buffer);
+            const writeString = (offset, string) => {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            };
+            writeString(0, 'RIFF');
+            view.setUint32(4, 36 + pcmData.length, true);
+            writeString(8, 'WAVE');
+            writeString(12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
+            writeString(36, 'data');
+            view.setUint32(40, pcmData.length, true);
+            for (let i = 0; i < pcmData.length; i++) {
+                view.setUint8(44 + i, pcmData[i]);
+            }
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+        async function playHackerWelcome() {
+            const text = "Say in a deep, distorted, robotic hacker voice: Welcome to the abyss, Rishi. Heart-hack protocol initiated. Access granted.";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text }] }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Iapetus" } } }
+                }
+            };
+
+            let retries = 0;
+            const delays = [1000, 2000, 4000, 8000, 16000];
+
+            async function fetchVoice() {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const audioData = result.candidates[0].content.parts[0].inlineData;
+                    const mimeType = audioData.mimeType;
+                    const sampleRate = parseInt(mimeType.split('rate=')[1]) || 24000;
+                    const binaryString = atob(audioData.data);
+                    const pcmData = new Uint8Array(binaryString.length);
+                    for (let i = 0; i < binaryString.length; i++) pcmData[i] = binaryString.charCodeAt(i);
+                    
+                    const wavBlob = pcmToWav(pcmData, sampleRate);
+                    const audio = new Audio(URL.createObjectURL(wavBlob));
+                    audio.play();
+                } catch (error) {
+                    if (retries < 5) {
+                        setTimeout(() => { retries++; fetchVoice(); }, delays[retries]);
+                    }
+                }
+            }
+            fetchVoice();
+        }
+
+        // Matrix Background
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-
-        const chars = "01❤⚛☣☠♥";
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const chars = "01❤⚛♥☣";
         const fontSize = 16;
-        let columns = canvas.width / fontSize;
-        let drops = [];
-
-        function initDrops() {
-            columns = canvas.width / fontSize;
-            drops = [];
-            for (let x = 0; x < columns; x++) {
-                drops[x] = 1;
-            }
-        }
-        initDrops();
+        let drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
 
         function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             ctx.font = fontSize + "px monospace";
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars.charAt(Math.floor(Math.random() * chars.length));
-                if(Math.random() > 0.95) ctx.fillStyle = "#0f0";
-                else ctx.fillStyle = "#ff2d75";
-
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
+            drops.forEach((y, i) => {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillStyle = Math.random() > 0.9 ? "#0f0" : "#ff2d75";
+                ctx.fillText(text, i * fontSize, y * fontSize);
+                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
-            }
+            });
         }
+        setInterval(drawMatrix, 40);
 
-        setInterval(drawMatrix, 35);
+        // Gate Logic
+        const gate = document.getElementById('gate-keeper');
+        const catTrigger = document.getElementById('cat-trigger');
+        const music = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        const statusText = document.getElementById('gate-status');
+        let isPlaying = false;
 
-        // Science Bubbles Generator
-        function createBubble() {
-            const section = document.getElementById('home');
-            const bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-            
-            const sizeValue = Math.random() * 15 + 8;
-            bubble.style.width = sizeValue + 'px';
-            bubble.style.height = sizeValue + 'px';
-            
-            bubble.style.left = Math.random() * 100 + 'vw';
-            bubble.style.animationDuration = Math.random() * 3 + 2 + 's';
-            
-            section.appendChild(bubble);
+        catTrigger.addEventListener('click', () => {
+            statusText.textContent = "BREACHING... ACCESSING AI CORE...";
+            playHackerWelcome();
             
             setTimeout(() => {
-                bubble.remove();
-            }, 5000);
-        }
+                gate.style.transform = "translateY(-100%)";
+                gate.style.opacity = "0";
+                music.play().catch(() => {});
+                isPlaying = true;
+                musicIcon.className = 'fas fa-volume-up text-pink-500';
+            }, 1500);
+        });
 
-        setInterval(createBubble, 400);
+        document.getElementById('music-toggle').addEventListener('click', () => {
+            if (isPlaying) { music.pause(); musicIcon.className = 'fas fa-volume-mute'; }
+            else { music.play(); musicIcon.className = 'fas fa-volume-up'; }
+            isPlaying = !isPlaying;
+        });
 
-        // Mobile Menu Toggle Logic
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        function toggleMenu() {
-            mobileMenu.classList.toggle('active');
-            menuIcon.classList.toggle('fa-bars');
-            menuIcon.classList.toggle('fa-times');
-        }
-
-        menuToggle.addEventListener('click', toggleMenu);
-        
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if(mobileMenu.classList.contains('active')) toggleMenu();
+        // Reveal Logic
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.reveal').forEach(rev => {
+                if (rev.getBoundingClientRect().top < window.innerHeight - 100) rev.classList.add('active');
             });
         });
 
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            initDrops();
-        });
-
-        // Typewriter effect for terminal simulation
-        const terminalText = [
-            "> Accessing rishi_romance_v2.dll...",
-            "> Patching heart_bypass.v3",
-            "> System Status: Rishi Mode Activated.",
-            "> Connecting to @abyss.creep server...",
-            "> CONNECTION SECURE. LOVE INJECTED."
-        ];
-        
-        let lineIndex = 0;
-        const terminalContainer = document.getElementById('terminal-content');
-
-        function addTerminalLine() {
-            if(lineIndex < terminalText.length) {
-                const p = document.createElement('p');
-                p.className = lineIndex % 2 === 0 ? "text-green-500" : "text-pink-400";
-                p.innerHTML = terminalText[lineIndex];
-                terminalContainer.insertBefore(p, terminalContainer.lastElementChild);
-                lineIndex++;
-                setTimeout(addTerminalLine, 2200);
-            }
-        }
-        
-        setTimeout(addTerminalLine, 2500);
+        window.onresize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
+        };
     </script>
 </body>
 </html>
