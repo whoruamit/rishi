@@ -38,9 +38,9 @@
 
         /* Glassmorphism Navbar */
         nav {
-            background: rgba(255, 45, 117, 0.05);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 45, 117, 0.2);
             position: fixed;
             width: 100%;
             z-index: 100;
@@ -87,11 +87,12 @@
 
         /* Terminal Style Section */
         .terminal-box {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             border: 1px solid var(--neon-green);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 8px;
+            word-wrap: break-word;
         }
 
         /* Glitch Effect */
@@ -116,10 +117,20 @@
         .insta-btn {
             background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
             transition: 0.3s;
+            touch-action: manipulation;
         }
         .insta-btn:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 0 25px var(--neon-pink);
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateY(-100%);
+        }
+        #mobile-menu.active {
+            transform: translateY(0);
         }
 
     </style>
@@ -130,72 +141,84 @@
     <canvas id="matrix-canvas"></canvas>
 
     <!-- Navigation -->
-    <nav class="py-4 px-8 flex justify-between items-center">
-        <div class="text-2xl font-bold neon-text-pink tracking-widest">RISHI</div>
+    <nav class="py-4 px-6 md:px-8 flex justify-between items-center">
+        <div class="text-xl md:text-2xl font-bold neon-text-pink tracking-widest">RISHI</div>
+        
+        <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
             <a href="#home" class="hover:text-[#ff2d75] transition">Home</a>
             <a href="#lab" class="hover:text-[#ff2d75] transition">The Lab</a>
             <a href="#hacking" class="hover:text-[#ff2d75] transition">Terminal</a>
             <a href="#contact" class="hover:text-[#ff2d75] transition">Connect</a>
         </div>
-        <div class="md:hidden">
-             <i class="fas fa-bars"></i>
+
+        <!-- Mobile Menu Toggle -->
+        <div class="md:hidden cursor-pointer text-2xl" id="menu-toggle">
+             <i class="fas fa-bars" id="menu-icon"></i>
         </div>
     </nav>
 
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-auto bg-black/95 z-[90] flex flex-col items-center py-20 space-y-6 md:hidden border-b border-pink-500">
+        <a href="#home" class="text-xl hover:text-pink-500 nav-link">Home</a>
+        <a href="#lab" class="text-xl hover:text-pink-500 nav-link">The Lab</a>
+        <a href="#hacking" class="text-xl hover:text-pink-500 nav-link">Terminal</a>
+        <a href="#contact" class="text-xl hover:text-pink-500 nav-link">Connect</a>
+    </div>
+
     <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
         <div class="science-vial mb-6">
-             <i class="fas fa-flask-vial text-6xl neon-text-green animate-pulse"></i>
+             <i class="fas fa-flask-vial text-5xl md:text-6xl neon-text-green animate-pulse"></i>
         </div>
-        <h1 class="text-5xl md:text-7xl font-bold mb-4 glitch" data-text="RISHI'S WORLD">RISHI'S WORLD</h1>
-        <p class="text-xl md:text-2xl text-pink-200 mb-8 max-w-2xl font-light italic" style="font-family: 'Sacramento', cursive;">
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 glitch" data-text="RISHI'S WORLD">RISHI'S WORLD</h1>
+        <p class="text-lg md:text-2xl text-pink-200 mb-8 max-w-2xl font-light italic" style="font-family: 'Sacramento', cursive;">
             "Hacking your heart with the chemistry of love and code."
         </p>
         <a href="#contact" class="heart-beat">
-            <i class="fas fa-heart text-6xl text-red-500"></i>
+            <i class="fas fa-heart text-5xl md:text-6xl text-red-500"></i>
         </a>
-        <p class="mt-4 text-xs tracking-widest uppercase opacity-50">Click to Initialize Connection</p>
+        <p class="mt-6 text-[10px] md:text-xs tracking-widest uppercase opacity-50">Click to Initialize Connection</p>
     </section>
 
     <!-- Science Section -->
-    <section id="lab" class="py-20 px-8 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 text-center neon-text-green">EXPERIMENTAL DATA</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <section id="lab" class="py-20 px-6 md:px-8 max-w-6xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-12 text-center neon-text-green uppercase tracking-widest">Experimental Data</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             <div class="terminal-box border-pink-500">
-                <i class="fas fa-dna text-3xl mb-4 text-pink-500"></i>
+                <i class="fas fa-dna text-2xl md:text-3xl mb-4 text-pink-500"></i>
                 <h3 class="font-bold mb-2">Genetic Sync</h3>
-                <p class="text-sm opacity-80">Calculating the molecular compatibility between your soul and Rishi's digital abyss.</p>
+                <p class="text-xs md:text-sm opacity-80">Calculating the molecular compatibility between your soul and Rishi's digital abyss.</p>
             </div>
             <div class="terminal-box">
-                <i class="fas fa-microscope text-3xl mb-4 neon-text-green"></i>
+                <i class="fas fa-microscope text-2xl md:text-3xl mb-4 neon-text-green"></i>
                 <h3 class="font-bold mb-2">Subatomic Love</h3>
-                <p class="text-sm opacity-80">Observed particles behaving in entanglement. Love is the only constant variable.</p>
+                <p class="text-xs md:text-sm opacity-80">Observed particles behaving in entanglement. Love is the only constant variable.</p>
             </div>
-            <div class="terminal-box border-blue-500">
-                <i class="fas fa-atom text-3xl mb-4 text-blue-500"></i>
+            <div class="terminal-box border-blue-500 sm:col-span-2 md:col-span-1">
+                <i class="fas fa-atom text-2xl md:text-3xl mb-4 text-blue-500"></i>
                 <h3 class="font-bold mb-2">Neural Breach</h3>
-                <p class="text-sm opacity-80">Overriding system safeguards to inject affection. Protocol: RISHI_HEART_V2.exe</p>
+                <p class="text-xs md:text-sm opacity-80">Overriding system safeguards to inject affection. Protocol: RISHI_HEART_V2.exe</p>
             </div>
         </div>
     </section>
 
     <!-- Hacking Terminal Section -->
-    <section id="hacking" class="py-20 bg-black/50">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="terminal-box font-mono text-sm md:text-base min-h-[300px]">
+    <section id="hacking" class="py-16 bg-black/50">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="terminal-box font-mono text-xs sm:text-sm md:text-base min-h-[250px] overflow-hidden">
                 <div class="flex items-center space-x-2 mb-4 border-b border-green-900 pb-2">
-                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    <span class="ml-4 opacity-50 text-xs">rishi_override.sh - 80x24</span>
+                    <div class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-red-500"></div>
+                    <div class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-green-500"></div>
+                    <span class="ml-2 md:ml-4 opacity-50 text-[10px] md:text-xs">rishi_override.sh — 80×24</span>
                 </div>
-                <div id="terminal-content">
+                <div id="terminal-content" class="space-y-1">
                     <p class="text-green-500">> Initializing heart_hack_protocol...</p>
                     <p class="text-green-500">> Scanning for Rishi (@abyss.creep) presence...</p>
                     <p class="text-blue-400">> Found target in the emotional database.</p>
-                    <p class="text-pink-500">> Warning: Critical levels of Romantic Radiation detected.</p>
-                    <p class="text-green-500">> Bypass successful. Emotional firewall disabled.</p>
+                    <p class="text-pink-500">> Warning: Critical Romantic Radiation.</p>
+                    <p class="text-green-500">> Bypass successful. Firewall disabled.</p>
                     <p class="text-white animate-pulse">_</p>
                 </div>
             </div>
@@ -203,36 +226,36 @@
     </section>
 
     <!-- Instagram & Contact -->
-    <section id="contact" class="py-32 flex flex-col items-center justify-center relative">
-        <div class="absolute inset-0 flex justify-center items-center opacity-10">
-            <i class="fas fa-heart text-[20rem] text-pink-500 blur-xl"></i>
+    <section id="contact" class="py-24 flex flex-col items-center justify-center relative overflow-hidden px-6">
+        <div class="absolute inset-0 flex justify-center items-center opacity-10 pointer-events-none">
+            <i class="fas fa-heart text-[15rem] md:text-[25rem] text-pink-500 blur-2xl"></i>
         </div>
         
-        <h2 class="text-4xl font-bold mb-12 z-10">FOLLOW RISHI</h2>
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 z-10 text-center uppercase tracking-widest">Follow Rishi</h2>
         
-        <div class="z-10 text-center">
+        <div class="z-10 text-center w-full">
             <div class="relative inline-block group">
                 <!-- Large Heart Animation -->
-                <div class="heart-beat cursor-pointer">
+                <div class="heart-beat cursor-pointer mb-10">
                     <a href="https://instagram.com/abyss.creep" target="_blank" class="block">
-                        <div class="w-32 h-32 md:w-48 md:h-48 rounded-full flex items-center justify-center bg-black border-4 border-pink-500 shadow-[0_0_50px_rgba(255,45,117,0.5)] overflow-hidden">
+                        <div class="w-32 h-32 md:w-48 md:h-48 rounded-full flex items-center justify-center bg-black border-4 border-pink-500 shadow-[0_0_40px_rgba(255,45,117,0.4)] overflow-hidden">
                             <i class="fab fa-instagram text-6xl md:text-8xl text-white"></i>
                         </div>
                     </a>
                 </div>
                 
-                <div class="mt-8">
+                <div class="mt-4">
                     <a href="https://instagram.com/abyss.creep" target="_blank" 
-                       class="insta-btn px-8 py-3 rounded-full font-bold text-xl inline-flex items-center space-x-3">
+                       class="insta-btn px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-lg md:text-xl inline-flex items-center space-x-3">
                         <span>@abyss.creep</span>
-                        <i class="fas fa-external-link-alt text-sm"></i>
+                        <i class="fas fa-external-link-alt text-xs"></i>
                     </a>
                 </div>
             </div>
         </div>
         
-        <div class="mt-20 text-gray-500 text-sm tracking-widest uppercase">
-            MADE WITH <i class="fas fa-heart text-red-600"></i> AND <i class="fas fa-code text-green-500"></i> BY RISHI
+        <div class="mt-24 text-gray-500 text-[10px] md:text-xs tracking-widest uppercase text-center">
+            Made with <i class="fas fa-heart text-red-600"></i> and <i class="fas fa-code text-green-500"></i> by Rishi
         </div>
     </section>
 
@@ -241,23 +264,30 @@
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
 
         const chars = "01❤⚛☣☠♥";
         const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = [];
+        let columns = canvas.width / fontSize;
+        let drops = [];
 
-        for (let x = 0; x < columns; x++) {
-            drops[x] = 1;
+        function initDrops() {
+            columns = canvas.width / fontSize;
+            drops = [];
+            for (let x = 0; x < columns; x++) {
+                drops[x] = 1;
+            }
         }
+        initDrops();
 
         function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "#ff2d75"; 
             ctx.font = fontSize + "px monospace";
 
             for (let i = 0; i < drops.length; i++) {
@@ -274,7 +304,7 @@
             }
         }
 
-        setInterval(drawMatrix, 33);
+        setInterval(drawMatrix, 35);
 
         // Science Bubbles Generator
         function createBubble() {
@@ -282,9 +312,9 @@
             const bubble = document.createElement('div');
             bubble.classList.add('bubble');
             
-            const size = Math.random() * 20 + 10 + 'px';
-            bubble.style.width = size;
-            bubble.style.height = size;
+            const sizeValue = Math.random() * 15 + 8;
+            bubble.style.width = sizeValue + 'px';
+            bubble.style.height = sizeValue + 'px';
             
             bubble.style.left = Math.random() * 100 + 'vw';
             bubble.style.animationDuration = Math.random() * 3 + 2 + 's';
@@ -296,11 +326,31 @@
             }, 5000);
         }
 
-        setInterval(createBubble, 300);
+        setInterval(createBubble, 400);
+
+        // Mobile Menu Toggle Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            menuIcon.classList.toggle('fa-bars');
+            menuIcon.classList.toggle('fa-times');
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(mobileMenu.classList.contains('active')) toggleMenu();
+            });
+        });
 
         window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            resizeCanvas();
+            initDrops();
         });
 
         // Typewriter effect for terminal simulation
@@ -322,11 +372,11 @@
                 p.innerHTML = terminalText[lineIndex];
                 terminalContainer.insertBefore(p, terminalContainer.lastElementChild);
                 lineIndex++;
-                setTimeout(addTerminalLine, 2000);
+                setTimeout(addTerminalLine, 2200);
             }
         }
         
-        setTimeout(addTerminalLine, 3000);
+        setTimeout(addTerminalLine, 2500);
     </script>
 </body>
 </html>
